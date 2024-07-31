@@ -4,7 +4,7 @@ import spring.boot_security.model.Person;
 
 import java.util.List;
 
-public interface UserService {
+public interface PersonService {
 
     List<Person> listUsers();
 

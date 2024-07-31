@@ -45,10 +45,7 @@ public class Role implements GrantedAuthority {
         return getName();
     }
 
-    @Override
-    public String toString() {
-        return this.name;
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -61,5 +58,10 @@ public class Role implements GrantedAuthority {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, people);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

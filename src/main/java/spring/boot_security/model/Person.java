@@ -27,10 +27,10 @@ public class Person {
     @Column
     private long id;
 
-    @Column(name = "name", nullable = false, length = 20)
+    @Column(name = "first_name", nullable = false, length = 20)
     private String username;
 
-    @Column(name = "lastName", nullable = false, length = 20)
+    @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
     @Column(name = "email")
@@ -49,19 +49,6 @@ public class Person {
     public Person() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return id == person.id && Objects.equals(username, person.username) && Objects.equals(lastName, person.lastName) && Objects.equals(email, person.email) && Objects.equals(password, person.password) && Objects.equals(roles, person.roles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, lastName, email, password, roles);
-    }
-
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
@@ -71,8 +58,21 @@ public class Person {
     private Set<Role> roles = new HashSet<>();
 
     @Override
+    public int hashCode() {
+        return Objects.hash(id, username, lastName, email, password, roles);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && Objects.equals(username, person.username) && Objects.equals(lastName, person.lastName) && Objects.equals(email, person.email) && Objects.equals(password, person.password) && Objects.equals(roles, person.roles);
+    }
+    @Override
     public String toString() {
         return "firstName = " + username + ", lastName = " + lastName + ", email = " + email;
     }
+
 }
 

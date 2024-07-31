@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import spring.boot_security.model.Person;
 import spring.boot_security.model.Role;
 import spring.boot_security.service.RoleService;
-import spring.boot_security.service.UserService;
+import spring.boot_security.service.PersonService;
 
 import java.util.List;
 
@@ -21,19 +21,19 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class AdminController {
     private final RoleService roleService;
-    private final UserService userService;
+    private final PersonService personService;
 
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
-        this.userService = userService;
+    public AdminController(PersonService personService, RoleService roleService) {
+        this.personService = personService;
         this.roleService = roleService;
     }
 
     @GetMapping
     public String admin(Model model) {
-        model.addAttribute("person", userService.listUsers());
-        return "admin/admin";
+        model.addAttribute("person", personService.listUsers());
+        return "admin";
     }
 
     @GetMapping(value = "/addNewUser")
@@ -41,28 +41,28 @@ public class AdminController {
         model.addAttribute("person", new Person());
         List<Role> roles = roleService.listRole();
         model.addAttribute("allRoles", roles);
-        return "admin/user-info";
+        return "user-info";
     }
 
     @PostMapping(value = "/saveUser")
     public String saveUser(@ModelAttribute("person") Person person) {
-        userService.saveUser(person);
+        personService.saveUser(person);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/updateUser")
     public String updateUser(@RequestParam("id") long id, Model model) {
         model.addAttribute("id", id);
-        Person person = userService.getUser(id);
+        Person person = personService.getUser(id);
         model.addAttribute("person", person);
         List<Role> roles = roleService.listRole();
         model.addAttribute("allRoles", roles);
-        return "admin/user-info";
+        return "user-info";
     }
 
     @GetMapping(value = "/deleteUser")
     public String deleteUser(@RequestParam("id") long id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
+        personService.deleteUser(id);
+        return "admin";
     }
 }

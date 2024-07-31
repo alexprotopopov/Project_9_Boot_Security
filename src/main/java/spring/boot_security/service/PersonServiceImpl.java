@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class PersonServiceImpl implements PersonService {
 
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final PersonRepository personRepository;
 
     @Autowired
